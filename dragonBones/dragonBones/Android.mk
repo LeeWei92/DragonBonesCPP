@@ -8,7 +8,7 @@ define walk
 $(wildcard $(1)) $(foreach e, $(wildcard $(1)/*), $(call walk, $(e)))
 endef
 
-#遍历Classes目录
+#遍历LOCAL_PATH目录
 ALLFILES = $(call walk, $(LOCAL_PATH))
 
 # FILE_LIST := hellocpp/main.cpp
