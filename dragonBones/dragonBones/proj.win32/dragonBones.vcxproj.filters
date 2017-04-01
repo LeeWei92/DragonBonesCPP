@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="dragonBones-cocos2dx">
+      <UniqueIdentifier>{d3662739-5416-4e0e-a14d-3b91c22d12b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework">
+      <UniqueIdentifier>{8e0bb391-ad36-422a-b165-edc49b8298a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\animation">
+      <UniqueIdentifier>{1d581a2f-f937-4581-bf70-836770f56291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\armature">
+      <UniqueIdentifier>{3d453fe5-9fa1-4302-b53a-4aac4b8b1a91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\core">
+      <UniqueIdentifier>{64c1f4c2-5f20-4c8c-949d-085b69c2c3d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\events">
+      <UniqueIdentifier>{038c4184-833b-40ab-a8e4-be776176d05f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\factories">
+      <UniqueIdentifier>{141082a6-4fed-4415-bd89-85785c209421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\geom">
+      <UniqueIdentifier>{dcb162ca-7741-4116-bf59-70f4b2880a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\model">
+      <UniqueIdentifier>{1f7a5d8b-5288-4dec-ae24-65df212d4ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\parsers">
+      <UniqueIdentifier>{a8a46dda-edeb-4c5e-a5dc-196b6cefbc11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="framework\textures">
+      <UniqueIdentifier>{2e9cf55f-bac2-46f2-9759-72ec8d4ee185}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\dragonBones-cocos2dx\CCArmatureDisplay.cpp">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dragonBones-cocos2dx\CCFactory.cpp">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dragonBones-cocos2dx\CCSlot.cpp">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dragonBones-cocos2dx\CCTextureData.cpp">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\animation\Animation.cpp">
+      <Filter>framework\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\animation\AnimationState.cpp">
+      <Filter>framework\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\animation\TimelineState.cpp">
+      <Filter>framework\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\animation\WorldClock.cpp">
+      <Filter>framework\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\armature\Armature.cpp">
+      <Filter>framework\armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\armature\Bone.cpp">
+      <Filter>framework\armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\armature\Slot.cpp">
+      <Filter>framework\armature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\core\BaseObject.cpp">
+      <Filter>framework\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\events\EventObject.cpp">
+      <Filter>framework\events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\factories\BaseFactory.cpp">
+      <Filter>framework\factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\model\AnimationData.cpp">
+      <Filter>framework\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\model\ArmatureData.cpp">
+      <Filter>framework\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\model\DragonBonesData.cpp">
+      <Filter>framework\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\model\FrameData.cpp">
+      <Filter>framework\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\model\TimelineData.cpp">
+      <Filter>framework\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\parsers\DataParser.cpp">
+      <Filter>framework\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\parsers\JSONDataParser.cpp">
+      <Filter>framework\parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\framework\textures\TextureData.cpp">
+      <Filter>framework\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dragonBones-cocos2dx\DragonBonesDataCache.cpp">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dragonBones-cocos2dx\DragonBonesNode.cpp">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\dragonBones-cocos2dx\CCArmatureDisplay.h">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dragonBones-cocos2dx\CCFactory.h">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dragonBones-cocos2dx\CCSlot.h">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dragonBones-cocos2dx\CCTextureData.h">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\animation\Animation.h">
+      <Filter>framework\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\animation\AnimationState.h">
+      <Filter>framework\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\animation\BaseTimelineState.h">
+      <Filter>framework\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\animation\IAnimateble.h">
+      <Filter>framework\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\animation\TimelineState.h">
+      <Filter>framework\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\animation\WorldClock.h">
+      <Filter>framework\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\armature\Armature.h">
+      <Filter>framework\armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\armature\Bone.h">
+      <Filter>framework\armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\armature\IArmatureDisplay.h">
+      <Filter>framework\armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\armature\Slot.h">
+      <Filter>framework\armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\armature\TransformObject.h">
+      <Filter>framework\armature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\core\BaseObject.h">
+      <Filter>framework\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\core\DragonBones.h">
+      <Filter>framework\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\events\EventObject.h">
+      <Filter>framework\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\factories\BaseFactory.h">
+      <Filter>framework\factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\geom\ColorTransform.h">
+      <Filter>framework\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\geom\Matrix.h">
+      <Filter>framework\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\geom\Point.h">
+      <Filter>framework\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\geom\Rectangle.h">
+      <Filter>framework\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\geom\Transform.h">
+      <Filter>framework\geom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\model\AnimationData.h">
+      <Filter>framework\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\model\ArmatureData.h">
+      <Filter>framework\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\model\DragonBonesData.h">
+      <Filter>framework\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\model\FrameData.h">
+      <Filter>framework\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\model\TimelineData.h">
+      <Filter>framework\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\parsers\DataParser.h">
+      <Filter>framework\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\parsers\JSONDataParser.h">
+      <Filter>framework\parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\textures\TextureData.h">
+      <Filter>framework\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\framework\DragonBonesHeaders.h">
+      <Filter>framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dragonBones-cocos2dx\dragonBones-cocos2dx.h">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dragonBones-cocos2dx\DragonBonesDataCache.h">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dragonBones-cocos2dx\DragonBonesNode.h">
+      <Filter>dragonBones-cocos2dx</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
