@@ -59,4 +59,11 @@ void DragonBonesDataCache::replaceSlotDisplay(const std::string& dragonBonesName
 	_factory.replaceSlotDisplay(dragonBonesName, armatureName, slotName, displayName, *slot, displayIndex);
 }
 
+void DragonBonesDataCache::clear()
+{
+	_factory.clear(false);
+	_textureAtlasDataMap.clear();
+	_dragonBonesDataMap.clear();
+}
+
 DRAGONBONES_NAMESPACE_END
