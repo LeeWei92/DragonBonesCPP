@@ -4,7 +4,8 @@
 
 DRAGONBONES_NAMESPACE_BEGIN
 
-CCSlot::CCSlot() 
+CCSlot::CCSlot()
+: _renderDisplay(nullptr)
 {
     _onClear();
 }
@@ -16,7 +17,10 @@ CCSlot::~CCSlot()
 void CCSlot::_onClear()
 {
     Slot::_onClear();
-
+	if (_renderDisplay)
+	{
+		_renderDisplay->removeFromParent();
+	}
     _renderDisplay = nullptr;
 }
 
@@ -322,7 +326,6 @@ void CCSlot::_updateMesh()
     const auto hasFFD = !this->_ffdVertices.empty();
     const auto displayVertices = meshDisplay->getPolygonInfoModify().triangles.verts;
     cocos2d::Rect boundsRect(999999.f, 999999.f, -999999.f, -999999.f);
-
     if (this->_meshData->skinned)
     {
         std::size_t iF = 0;

@@ -36,7 +36,6 @@ void AnimationData::_onClear()
             }
         }
     }
-
     hasAsynchronyTimeline = false;
     frameCount = 0;
     playTimes = 0;

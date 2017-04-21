@@ -195,9 +195,12 @@ cocos2d::PolygonInfo& DBCCSprite::getPolygonInfoModify()
 void DBCCSprite::setContentSize(const cocos2d::Size& size)
 {
 
-	cocos2d::Sprite::setContentSize(size);
+	//cocos2d::Sprite::setContentSize(size);
 
-	//updatePoly();
+	Node::setContentSize(size);
+
+	updateStretchFactor();
+	updatePoly();
 }
 
 DRAGONBONES_NAMESPACE_END

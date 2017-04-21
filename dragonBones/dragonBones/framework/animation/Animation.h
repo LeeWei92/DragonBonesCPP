@@ -34,7 +34,6 @@ public:
     bool _timelineStateDirty;
     /** @private */
     Armature* _armature;
-    
 private:
     bool _isPlaying;
     float _time;
@@ -42,7 +41,6 @@ private:
     std::map<std::string, AnimationData*> _animations;
     std::vector<std::string> _animationNames;
     std::vector<AnimationState*> _animationStates;
-
 public:
     Animation();
     ~Animation();
@@ -53,7 +51,6 @@ private:
 protected:
     void _onClear() override;
     void _fadeOut(float fadeOutTime, int layer, const std::string& group, AnimationFadeOutMode fadeOutMode, bool pauseFadeOut);
-
 public:
     /** @private */
     void _updateFFDTimelineStates();

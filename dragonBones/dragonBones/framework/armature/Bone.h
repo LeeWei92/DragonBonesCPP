@@ -64,7 +64,7 @@ public:
     void _setIK(Bone* value, unsigned chain, int chainIndex);
     /** @private */
     void _update(int cacheFrameIndex);
-
+	void reset() { _onClear(); }
 public:
     bool contains(const TransformObject* child) const;
     void setVisible(bool value);

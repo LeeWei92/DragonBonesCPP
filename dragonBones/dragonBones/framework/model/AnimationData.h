@@ -35,7 +35,6 @@ public:
     AnimationData();
     /** @private */
     ~AnimationData();
-
 private:
     DRAGONBONES_DISALLOW_COPY_AND_ASSIGN(AnimationData);
 
@@ -57,7 +56,6 @@ public:
     {
         return mapFind(boneTimelines, name);
     }
-
     /** @private */
     inline SlotTimelineData* getSlotTimeline(const std::string& name) const
     {

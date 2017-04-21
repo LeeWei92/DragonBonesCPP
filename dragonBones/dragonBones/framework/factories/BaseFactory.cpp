@@ -169,46 +169,80 @@ void BaseFactory::_replaceSlotDisplay(const BuildArmaturePackage& dataPackage, D
         displayIndex = slot.getDisplayIndex();
     }
 
-    if (displayIndex >= 0)
-    {
-        auto displayList = slot.getDisplayList(); // copy
-        if (displayList.size() <= (unsigned)displayIndex)
-        {
-            displayList.resize(displayIndex + 1, std::make_pair(nullptr, DisplayType::Image));
-        }
+	if (displayIndex >= 0)
+	{
+		auto displayList = slot.getDisplayList(); // copy
+		if (displayList.size() <= (unsigned)displayIndex)
+		{
+			displayList.resize(displayIndex + 1, std::make_pair(nullptr, DisplayType::Image));
+		}
 
-        if (slot._replacedDisplayDataSet.size() <= (unsigned)displayIndex)
-        {
-            slot._replacedDisplayDataSet.resize(displayIndex + 1, nullptr);
-        }
+		if (slot._replacedDisplayDataSet.size() <= (unsigned)displayIndex)
+		{
+			slot._replacedDisplayDataSet.resize(displayIndex + 1, nullptr);
+		}
 
-        slot._replacedDisplayDataSet[displayIndex] = const_cast<DisplayData*>(&displayData);
+		slot._replacedDisplayDataSet[displayIndex] = const_cast<DisplayData*>(&displayData);
 
-        if (displayData.type == DisplayType::Armature)
-        {
-            const auto childArmature = buildArmature(displayData.name, dataPackage.dataName);
-            displayList[displayIndex] = std::make_pair(childArmature, DisplayType::Armature);
-        }
-        else
-        {
-            if (!displayData.texture)
-            {
-                displayData.texture = _getTextureData(dataPackage.dataName, displayData.name);
-            }
+		if (displayData.type == DisplayType::Armature)
+		{
+			const auto childArmature = buildArmature(displayData.name, dataPackage.dataName);
+			displayList[displayIndex] = std::make_pair(childArmature, DisplayType::Armature);
+		}
+		else
+		{
+			if (!displayData.texture)
+			{
+				displayData.texture = _getTextureData(dataPackage.dataName, displayData.name);
+			}
 
-            if (
-                displayData.mesh &&
-                (displayIndex < slot._displayDataSet->displays.size() && slot._displayDataSet->displays[displayIndex]->mesh)
-            )
-            {
-                displayList[displayIndex] = std::make_pair(slot.getMeshDisplay(), displayData.type);
-            }
-            else
-            {
-                displayList[displayIndex] = std::make_pair(slot.getRawDisplay(), displayData.type);
-            }
-        }
+			if (
+				displayData.mesh &&
+				(displayIndex < slot._displayDataSet->displays.size() && slot._displayDataSet->displays[displayIndex]->mesh)
+				)
+			{
+				displayList[displayIndex] = std::make_pair(slot.getMeshDisplay(), displayData.type);
+			}
+			else
+			{
+				displayList[displayIndex] = std::make_pair(slot.getRawDisplay(), displayData.type);
+			}
+		}
 
+		if (displayData.mesh)
+		{
+			for (auto bones : slot.getBones())
+			{
+				for (const auto& animtion : dataPackage.armature->animations)
+				{
+					auto oldSlotAnimtion = slot.getArmature()->getAnimation()->getAnimations();
+					auto armature = slot.getArmature();
+					if (oldSlotAnimtion.find(animtion.first) != oldSlotAnimtion.end())
+					{
+						auto boneTimeline = animtion.second->getBoneTimeline(bones->name);
+						AnimationData* newAnimationData = nullptr;
+						if (armature->_replaceAnimationData.find(animtion.first) == armature->_replaceAnimationData.end())
+						{
+							newAnimationData = BaseObject::borrowObject<AnimationData>();
+						}
+						else
+						{
+							newAnimationData = armature->_replaceAnimationData[animtion.first];
+						}
+						if (boneTimeline)
+						{
+							newAnimationData->boneTimelines[bones->name] = boneTimeline;
+						}
+						auto slotTimeline = animtion.second->getSlotTimeline(slot.name);
+						if (slotTimeline)
+						{
+							newAnimationData->slotTimelines[slot.name] = slotTimeline;
+						}
+						armature->_replaceAnimationData[animtion.first] = newAnimationData;
+					}
+				}
+			}
+		}
         slot.setDisplayList(displayList);
         slot.invalidUpdate();
     }
@@ -423,7 +457,7 @@ void BaseFactory::replaceSlotDisplay(const std::string& dragonBonesName, const s
             for (const auto displayData : slotDisplayDataSet->displays)
             {
                 if (displayData->name == displayName)
-                {
+				{
                     _replaceSlotDisplay(dataPackage, *displayData, slot, displayIndex);
                 }
             }

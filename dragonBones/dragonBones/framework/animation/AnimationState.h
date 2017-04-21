@@ -62,7 +62,6 @@ private:
     std::vector<BoneTimelineState*> _boneTimelines;
     std::vector<SlotTimelineState*> _slotTimelines;
     std::vector<FFDTimelineState*> _ffdTimelines;
-
 public:
     AnimationState();
     ~AnimationState();
@@ -137,6 +136,8 @@ public:
     {
         return _duration;
     }
+	BoneTimelineData* getReplaceBoneTime(const std::string& name);
+	SlotTimelineData* getReplaceSlotTime(const std::string& name);
 };
 
 DRAGONBONES_NAMESPACE_END

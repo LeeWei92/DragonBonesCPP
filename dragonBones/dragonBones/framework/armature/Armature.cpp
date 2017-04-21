@@ -53,7 +53,10 @@ void Armature::_onClear()
         _display->_onClear();
         _display = nullptr;
     }
-
+	for (const auto& pair : _replaceAnimationData)
+	{
+		pair.second->returnToPool();
+	}
     _replacedTexture = nullptr;
     _parent = nullptr;
 
@@ -65,6 +68,7 @@ void Armature::_onClear()
     _slots.clear();
     _actions.clear();
     _events.clear();
+	_replaceAnimationData.clear();
 }
 
 void Armature::_sortBones()

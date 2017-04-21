@@ -17,7 +17,6 @@ DragonBonesNode* DragonBonesNode::create(const std::string& dragonBonesDataFileP
 	auto pNode = new (std::nothrow) DragonBonesNode();
 	if (pNode && pNode->initDragonBonesData(dragonBonesDataFilePath, textureAtlasDataFilePath, dragonBonesName, scale))
 	{
-		pNode->initRenderer();
 		pNode->autorelease();
 		return pNode;
 	}
@@ -71,15 +70,11 @@ bool DragonBonesNode::initDragonBonesData(const std::string& dragonBonesDataFile
 
 	_dragonBonesData = _dragonBonesDataCache->loadDragonBonesData(dragonBonesDataFilePath, dragonBonesName);
 	_dragonBonesDataCache->loadTextureAtlasData(textureAtlasDataFilePath, dragonBonesName, scale);
-	return true;
-}
 
-void DragonBonesNode::initRenderer()
-{
 	const auto& armatureNames = _dragonBonesData->getArmatureNames();
 	if (armatureNames.empty())
 	{
-		return;
+		return false;
 	}
 
 	// Remove prev Armature.
@@ -95,19 +90,9 @@ void DragonBonesNode::initRenderer()
 	const auto& armatureName = armatureNames[0];
 
 	// a. Build Armature Display. (buildArmatureDisplay will advanceTime animation by Armature Display)
-	_armatureDisplay = _dragonBonesDataCache->buildArmatureDisplay(armatureName);
-	_armature = _armatureDisplay->getArmature();
-	auto &armatureData = _armature->getArmatureData();
-	setContentSize(Size(armatureData.aabb.width, armatureData.aabb.height));
-	// Add Armature Display.
-	addChild(_armatureDisplay);
+	auto armatureDisplay = _dragonBonesDataCache->buildArmatureDisplay(armatureName, dragonBonesName);
 
-	auto animationNames = _armatureDisplay->getAnimation()->getAnimationNames();
-	if (animationNames.empty())
-	{
-		return;
-	}
-	_armatureDisplay->getAnimation()->play(animationNames[0]);
+	return initRenderer(armatureDisplay);
 }
 
 bool DragonBonesNode::playAnimation(const std::string& animationName , int playTimes /* = -1 */)
@@ -158,7 +143,7 @@ bool DragonBonesNode::changeArmature(const std::string& armatureName)
 		}
 
 		// a. Build Armature Display. (buildArmatureDisplay will advanceTime animation by Armature Display)
-		_armatureDisplay = _dragonBonesDataCache->buildArmatureDisplay(*it);
+		_armatureDisplay = _dragonBonesDataCache->buildArmatureDisplay(*it, _dragonBonesData->name);
 		_armature = _armatureDisplay->getArmature();
 		_armatureDisplay->setAnchorPoint(Vec2(0, 0));
 		setContentSize(_armatureDisplay->getContentSize());
@@ -174,7 +159,7 @@ void DragonBonesNode::replaceTexture(const std::string& slotName, const std::str
 {
 }
 
-void DragonBonesNode::changeSlot(const std::string& dragonBonesName, const std::string& armatureName, const std::string& desSlotName, const std::string& displayName, const std::string& srcSlotName, int displayIndex /* = -1 */)
+void DragonBonesNode::replaceSlot(const std::string& dragonBonesName, const std::string& armatureName, const std::string& desSlotName, const std::string& displayName, const std::string& srcSlotName, int displayIndex)
 {
 	_dragonBonesDataCache->replaceSlotDisplay(dragonBonesName, armatureName, desSlotName, displayName, (_armature->getSlot(srcSlotName)), displayIndex);
 }
@@ -194,21 +179,20 @@ DragonBonesNode* DragonBonesNode::clone()
 	const auto& armatureNames = _armature->_armatureData->parent->getArmatureNames();
 
 	const auto& armatureName = armatureNames[0];
-	auto armatureDisplay = _dragonBonesDataCache->buildArmatureDisplay(armatureName);
-
+	auto armatureDisplay = _dragonBonesDataCache->buildArmatureDisplay(armatureName, _dragonBonesData->name);
+	armatureDisplay->getArmature()->_replaceAnimationData = _armature->_replaceAnimationData;
 	for (auto slot : _armature->getSlots())
 	{
 		auto newSlot = armatureDisplay->getArmature()->getSlot(slot->name);
 		newSlot->_replacedDisplayDataSet = slot->_replacedDisplayDataSet;
+		newSlot->_updateMeshData(false);
 		newSlot->invalidUpdate();
 	}
-
 	auto pNode = DragonBonesNode::create(armatureDisplay);
 	pNode->setPosition(getPosition());
 	pNode->setAnchorPoint(getAnchorPoint());
 	pNode->setScale(getScale());
 	pNode->setFlippedX(getFlippedX());
-
 	return pNode;
 }
 

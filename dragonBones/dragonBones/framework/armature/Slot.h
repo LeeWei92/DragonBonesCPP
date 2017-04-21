@@ -44,7 +44,7 @@ public: // private friend class
     std::vector<float> _ffdVertices;
     /** @private */
     std::vector<DisplayData*> _replacedDisplayDataSet;
-
+	//std::map<std::string, BoneData*> _replaceBoneData;
 protected:
     bool _displayDirty;
     bool _blendModeDirty;
@@ -125,7 +125,8 @@ public:
     bool _setBlendMode(BlendMode value);
     /** @private */
     bool _setColor(const ColorTransform& value);
-
+	Armature* getArmature() { return _armature; }
+	std::vector<Bone*> getBones() { return _meshBones; }
 public:
     inline void invalidUpdate() 
     {

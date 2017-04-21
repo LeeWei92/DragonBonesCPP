@@ -40,6 +40,8 @@ public: // private
     /** @private */
     Slot* _parent;
 
+	std::map<std::string, AnimationData*> _replaceAnimationData;
+
 protected:
     bool _delayDispose;
     bool _lockDispose;

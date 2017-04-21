@@ -12,7 +12,7 @@ DRAGONBONES_NAMESPACE_BEGIN
 class DragonBonesNode : public Node
 {
 public:
-	static DragonBonesNode* create(const std::string& dragonBonesDataFilePath, const std::string& textureAtlasDataFilePath, const std::string& dragonBonesName = "", float scale = 1.0f);
+	static DragonBonesNode* create(const std::string& dragonBonesDataFilePath, const std::string& textureAtlasDataFilePath, const std::string& dragonBonesName, float scale = 1.0f);
 	static DragonBonesNode* create(CCArmatureDisplay* armatureDisplay);
 	void setFlippedX(bool isFlippedX);
 	bool getFlippedX() { return _isFlippedX; }
@@ -23,12 +23,11 @@ public:
 	bool changeArmature(const std::string& armatureName);
 	bool playAnimation(const std::string& animationName , int playTimes = -1);
 	bool stopAnimation(const std::string& animationName);
-	void changeSlot(const std::string& dragonBonesName, const std::string& armatureName, const std::string& desSlotName, const std::string& displayName, const std::string& srcSlotName, int displayIndex = -1);
+	void replaceSlot(const std::string& dragonBonesName, const std::string& armatureName, const std::string& desSlotName, const std::string& displayName, const std::string& srcSlotName, int displayIndex = -1);
 	DragonBonesNode* clone();
     void replaceTexture(const std::string& slotName, const std::string&replaceFilePath, int displayIndex = -1);
 protected:
 	bool initDragonBonesData(const std::string& dragonBonesDataFilePath, const std::string& textureAtlasDataFilePath, const std::string& dragonBonesName, float scale);
-	void initRenderer();
 	bool initRenderer(CCArmatureDisplay* armatureDisplay);
 protected:
 	DragonBonesNode();
