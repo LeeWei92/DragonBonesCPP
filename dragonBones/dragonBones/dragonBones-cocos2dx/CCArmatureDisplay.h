@@ -65,7 +65,7 @@ public:
     /** @private */
     static DBCCSprite* create();
 
-	void setContentSize(const cocos2d::Size& size);
+	void setContentSize(const cocos2d::Size& size) override;
 protected:
     DBCCSprite();
     virtual ~DBCCSprite();
