@@ -167,13 +167,16 @@ public:
         if (!_isCompleted && _setCurrentTime(time))
         {
             const unsigned currentFrameIndex = _keyFrameCount > 1 ? unsigned(_currentTime * _frameRate) : 0;
-            const auto currentFrame = _timeline->frames[currentFrameIndex];
+			if (currentFrameIndex < _timeline->frames.size())
+			{
+				const auto currentFrame = _timeline->frames[currentFrameIndex];
 
-            if (_currentFrame != currentFrame)
-            {
-                _currentFrame = currentFrame;
-                _onArriveAtFrame(true);
-            }
+				if (_currentFrame != currentFrame)
+				{
+					_currentFrame = currentFrame;
+					_onArriveAtFrame(true);
+				}
+			}
 
             _onUpdateFrame(true);
         }

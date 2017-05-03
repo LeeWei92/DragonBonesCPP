@@ -15,10 +15,12 @@ public:
 	static DragonBonesDataCache* getInstance();
 	static void destroyInstance();
 
+	void loadDragonBones(const std::string& skeFilePath, const std::string& texFilePath, const std::string& dragonBonesName, float scale = 0.f);
 	DragonBonesData* loadDragonBonesData(const std::string& filePath, const std::string& dragonBonesName);
 	TextureAtlasData* loadTextureAtlasData(const std::string& filePath, const std::string& dragonBonesName, float scale = 0.f);
 	CCArmatureDisplay* buildArmatureDisplay(const std::string& armatureName, const std::string& dragonBonesName, const std::string& skinName = "");
-    void replaceSlotDisplay(const std::string& dragonBonesName, const std::string& armatureName, const std::string& slotName, const std::string& displayName, Slot* slot, int displayIndex = -1);
+	void replaceSlot(Armature& armature, std::map<std::string, Slot*> _replaceSlots);
+	void replaceSlotDisplay(const std::string& dragonBonesName, const std::string& armatureName, const std::string& slotName, const std::string& displayName, Slot* slot, int displayIndex = -1);
 	void clear();
 protected:
 	DragonBonesDataCache();

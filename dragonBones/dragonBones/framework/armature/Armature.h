@@ -41,7 +41,7 @@ public: // private
     Slot* _parent;
 
 	std::map<std::string, AnimationData*> _replaceAnimationData;
-
+	std::map<std::string, Slot*> _replaceSlots;
 protected:
     bool _delayDispose;
     bool _lockDispose;

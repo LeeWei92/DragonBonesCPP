@@ -223,11 +223,13 @@ void AnimationState::_updateTimelineStates()
 		const auto replaceBoneTimelineData = getReplaceBoneTime(boneTimelineName);
 		if (replaceBoneTimelineData && containsBoneMask(boneTimelineName))
 		{
-			const auto boneTimelineState = BaseObject::borrowObject<BoneTimelineState>();
-			boneTimelineState->bone = bone;
-			boneTimelineState->fadeIn(_armature, this, replaceBoneTimelineData, time);
-			_boneTimelines.push_back(boneTimelineState);
-			
+			if (replaceBoneTimelineData->bone)
+			{
+				const auto boneTimelineState = BaseObject::borrowObject<BoneTimelineState>();
+				boneTimelineState->bone = bone;
+				boneTimelineState->fadeIn(_armature, this, replaceBoneTimelineData, time);
+				_boneTimelines.push_back(boneTimelineState);
+			}
 		} else if (boneTimelineData && containsBoneMask(boneTimelineName))
         {
             const auto iterator = boneTimelineStates.find(boneTimelineName);
@@ -268,11 +270,13 @@ void AnimationState::_updateTimelineStates()
 		const auto replaceslotTimelineData = getReplaceSlotTime(timelineName);
 		if (replaceslotTimelineData && containsBoneMask(parentTimelineName) && !_isFadeOut)
 		{
-			const auto slotTimelineState = BaseObject::borrowObject<SlotTimelineState>();
-			slotTimelineState->slot = slot;
-			slotTimelineState->fadeIn(_armature, this, slotTimelineData, time);
-			_slotTimelines.push_back(slotTimelineState);
-
+			if (replaceslotTimelineData->slot)
+			{
+				const auto slotTimelineState = BaseObject::borrowObject<SlotTimelineState>();
+				slotTimelineState->slot = slot;
+				slotTimelineState->fadeIn(_armature, this, slotTimelineData, time);
+				_slotTimelines.push_back(slotTimelineState);
+			}
 		}else if (slotTimelineData && containsBoneMask(parentTimelineName) && !_isFadeOut)
         {
             const auto iterator = slotTimelineStates.find(timelineName);

@@ -37,6 +37,7 @@ protected:
 public:
     virtual void _updateVisible() override;
     virtual void _updateBlendMode() override;
+	CCSlot* clone();
 };
 
 DRAGONBONES_NAMESPACE_END

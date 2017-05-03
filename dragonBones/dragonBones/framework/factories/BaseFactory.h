@@ -72,6 +72,7 @@ public:
     virtual void addTextureAtlasData(TextureAtlasData* data, const std::string& dragonBonesName = "");
     virtual void removeTextureAtlasData(const std::string& dragonBonesName, bool disposeData = true);
     virtual void clear(bool disposeData = true);
+	virtual void replaceSlot(Armature& armature, std::map<std::string, Slot*> _replaceSlots);
 
     virtual Armature* buildArmature(const std::string& armatureName, const std::string& dragonBonesName = "", const std::string& skinName = "") const;
     virtual bool copyAnimationsToArmature(

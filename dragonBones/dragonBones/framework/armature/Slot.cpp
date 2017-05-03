@@ -225,11 +225,23 @@ void Slot::_updateMeshData(bool isTimelineUpdate)
 		if (replaceDisplayData && replaceDisplayData->mesh &&replaceDisplayData->mesh != _meshData)
 		{
 			std::vector<Bone*> tmpBones;
-			for (auto bone : _meshBones)
-			{
-				bone->name = "release_";
-				tmpBones.push_back(bone);
-			}
+			//if (0 < replaceDisplayData->mesh->bones.size())
+			//{
+			//	for (auto bone : _meshBones)
+			//	{
+					//for (const auto boneData : replaceDisplayData->mesh->bones)
+					//{
+					//	if (boneData->name == bone->name)
+					//	{
+					//		bone->name = "release_";
+					//		bone->reset();
+					//		tmpBones.push_back(bone);
+					//		break;
+					//	}
+					//}
+			//	}
+			//}
+
 			int i = 0;
 			for (const auto boneData : replaceDisplayData->mesh->bones)
 			{
@@ -237,12 +249,21 @@ void Slot::_updateMeshData(bool isTimelineUpdate)
 				if (i < tmpBones.size())
 				{
 					bone = tmpBones.at(i);
-					bone->reset();
 				}
 				else
 				{
-					bone = BaseObject::borrowObject<Bone>();
-					_armature->_addBoneToBoneList(bone);
+					auto oldBone = _armature->getBone(boneData->name);
+					if (oldBone)
+					{
+						oldBone->name = "release_";
+						oldBone->reset();
+						bone = oldBone;
+					}
+					else
+					{
+						bone = BaseObject::borrowObject<Bone>();
+						_armature->_addBoneToBoneList(bone);
+					}
 				}
 				bone->name = boneData->name;
 				i++;
@@ -587,5 +608,4 @@ void Slot::setChildArmature(Armature* value)
 
     setDisplay(value, DisplayType::Armature);
 }
-
 DRAGONBONES_NAMESPACE_END

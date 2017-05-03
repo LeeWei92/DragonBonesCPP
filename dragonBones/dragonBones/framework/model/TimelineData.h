@@ -72,6 +72,7 @@ protected:
 public:
     /** @private */
     void cacheFrames(std::size_t cacheFrameCount);
+	void reset() { _onClear(); }
 };
 
 /**
@@ -100,6 +101,7 @@ protected:
 public:
     /** @private */
     void cacheFrames(std::size_t cacheFrameCount);
+	void reset() { _onClear(); }
 };
 
 /**

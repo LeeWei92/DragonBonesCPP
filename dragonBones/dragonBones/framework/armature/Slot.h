@@ -110,6 +110,7 @@ public:
     virtual void _updateVisible() = 0;
     /** @private */
     virtual void _updateBlendMode() = 0;
+	virtual Slot* clone() = 0;
 
     /** @private */
     virtual void _setArmature(Armature* value) override;

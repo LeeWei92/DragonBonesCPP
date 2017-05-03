@@ -53,7 +53,8 @@ protected:
     void _fadeOut(float fadeOutTime, int layer, const std::string& group, AnimationFadeOutMode fadeOutMode, bool pauseFadeOut);
 public:
     /** @private */
-    void _updateFFDTimelineStates();
+	void updateTimelineStates();
+	void _updateFFDTimelineStates();
     /** @private */
     void _advanceTime(float passedTime);
 

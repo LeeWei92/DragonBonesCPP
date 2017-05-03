@@ -162,6 +162,22 @@ void BaseFactory::_buildSlots(const BuildArmaturePackage& dataPackage, Armature&
     }
 }
 
+void BaseFactory::replaceSlot(Armature& armature, std::map<std::string, Slot*> _replaceSlots)
+{
+	for (auto pair : _replaceSlots)
+	{
+		auto oldSlot = armature.getSlot(pair.first);
+		if (oldSlot)
+		{
+			auto newSlot = pair.second->clone();
+			newSlot->_setArmature(nullptr);
+			armature.addSlot(newSlot, newSlot->getParent()->name);
+			armature.removeSlot(oldSlot);
+			oldSlot->returnToPool();
+		}
+	}
+}
+
 void BaseFactory::_replaceSlotDisplay(const BuildArmaturePackage& dataPackage, DisplayData& displayData, Slot& slot, int displayIndex) const
 {
     if (displayIndex < 0)
@@ -211,7 +227,7 @@ void BaseFactory::_replaceSlotDisplay(const BuildArmaturePackage& dataPackage, D
 
 		if (displayData.mesh)
 		{
-			for (auto bones : slot.getBones())
+			for (auto bones : displayData.mesh->bones)
 			{
 				for (const auto& animtion : dataPackage.armature->animations)
 				{
@@ -233,18 +249,65 @@ void BaseFactory::_replaceSlotDisplay(const BuildArmaturePackage& dataPackage, D
 						{
 							newAnimationData->boneTimelines[bones->name] = boneTimeline;
 						}
+						else
+						{
+							if (newAnimationData->boneTimelines[bones->name])
+							{
+								//newAnimationData->boneTimelines[bones->name]->reset();
+							}
+							else
+							{
+								//newAnimationData->boneTimelines[bones->name] = BaseObject::borrowObject<BoneTimelineData>();
+							}
+						}
 						auto slotTimeline = animtion.second->getSlotTimeline(slot.name);
 						if (slotTimeline)
 						{
 							newAnimationData->slotTimelines[slot.name] = slotTimeline;
+						}
+						else
+						{
+							if (newAnimationData->slotTimelines[bones->name])
+							{
+								//newAnimationData->slotTimelines[bones->name]->reset();
+							}
+							else
+							{
+								//newAnimationData->slotTimelines[bones->name] = BaseObject::borrowObject<SlotTimelineData>();
+							}
 						}
 						armature->_replaceAnimationData[animtion.first] = newAnimationData;
 					}
 				}
 			}
 		}
-        slot.setDisplayList(displayList);
-        slot.invalidUpdate();
+
+		if ((!displayData.mesh && slot._meshData) || (displayData.mesh && 0 >= displayData.mesh->bones.size()))
+		{
+			const auto armature = _generateArmature(dataPackage);
+			_buildBones(dataPackage, *armature);
+			_buildSlots(dataPackage, *armature);
+			Slot* newSlot = armature->getSlot(slot.name);
+			if (newSlot)
+			{
+
+				newSlot->_setArmature(nullptr);
+				if (slot.getArmature()->getBone(newSlot->getParent()->name))
+				{
+					slot.getArmature()->addSlot(newSlot, newSlot->getParent()->name);
+					slot.getArmature()->_replaceSlots[slot.name] = newSlot;
+
+					slot.returnToPool();
+					slot.getArmature()->removeSlot(&slot);
+				}
+			}
+			armature->returnToPool();
+		}
+		else
+		{
+			slot.setDisplayList(displayList);
+			slot.invalidUpdate();
+		}
     }
 }
 

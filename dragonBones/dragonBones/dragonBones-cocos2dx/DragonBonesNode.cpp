@@ -181,6 +181,8 @@ DragonBonesNode* DragonBonesNode::clone()
 	const auto& armatureName = armatureNames[0];
 	auto armatureDisplay = _dragonBonesDataCache->buildArmatureDisplay(armatureName, _dragonBonesData->name);
 	armatureDisplay->getArmature()->_replaceAnimationData = _armature->_replaceAnimationData;
+	armatureDisplay->getArmature()->_replaceSlots = _armature->_replaceSlots;
+	_dragonBonesDataCache->replaceSlot(*armatureDisplay->getArmature(), _armature->_replaceSlots);
 	for (auto slot : _armature->getSlots())
 	{
 		auto newSlot = armatureDisplay->getArmature()->getSlot(slot->name);

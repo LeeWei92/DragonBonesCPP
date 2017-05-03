@@ -454,4 +454,78 @@ void CCSlot::_updateTransform()
     _renderDisplay->setNodeToParentTransform(transform);
 }
 
+CCSlot* CCSlot::clone()
+{
+	CCSlot* newSlot = BaseObject::borrowObject<CCSlot>();
+	newSlot->_displayDataSet = _displayDataSet;
+	newSlot->_setDisplayIndex(_displayIndex);
+	newSlot->inheritAnimation = inheritAnimation;
+	newSlot->displayController = displayController;
+	newSlot->_colorDirty = _colorDirty;
+	newSlot->_ffdDirty = _ffdDirty;
+	newSlot->_blendIndex = _blendIndex;
+	newSlot->_zOrder = _zOrder;
+	newSlot->_blendMode = _blendMode;
+	newSlot->_pivotX = _pivotX;
+	newSlot->_pivotY = _pivotY;
+	newSlot->_meshData = _meshData;
+	newSlot->_cacheFrames = _cacheFrames;
+	newSlot->_colorTransform = _colorTransform;
+	newSlot->_ffdVertices = _ffdVertices;
+	newSlot->_replacedDisplayDataSet = _replacedDisplayDataSet;
+	newSlot->_displayDirty = _displayDirty;
+	newSlot->_blendModeDirty = _blendModeDirty;
+	newSlot->_originDirty = _originDirty;
+	newSlot->_transformDirty = _transformDirty;
+	newSlot->_displayIndex = _displayIndex;
+	newSlot->_childArmature = _childArmature;
+	newSlot->_localMatrix = _localMatrix;
+	newSlot->_meshBones = _meshBones;
+	newSlot->userData = userData;
+	newSlot->name = name;
+	newSlot->globalTransformMatrix = globalTransformMatrix;
+	newSlot->global = global;
+	newSlot->origin = origin;
+	newSlot->offset = offset;
+	newSlot->_armature = _armature;
+	newSlot->_parent = _parent;
+	newSlot->_globalTransformMatrix = _globalTransformMatrix;
+
+	const auto slotData = newSlot->_displayDataSet;
+	std::vector<std::pair<void*, DisplayType>> displayList;
+	const auto rawDisplay = DBCCSprite::create();
+
+	newSlot->_rawDisplay = rawDisplay;
+	newSlot->_meshDisplay = newSlot->_rawDisplay;
+
+	displayList.reserve(_displayDataSet->displays.size());
+	rawDisplay->retain();
+	rawDisplay->setCascadeOpacityEnabled(true);
+	rawDisplay->setCascadeColorEnabled(true);
+	rawDisplay->setAnchorPoint(cocos2d::Vec2::ZERO);
+
+	for (const auto displayData : _displayDataSet->displays)
+	{
+		switch (displayData->type)
+		{
+		case DisplayType::Image:
+			displayList.push_back(std::make_pair(newSlot->_rawDisplay, DisplayType::Image));
+			break;
+
+		case DisplayType::Mesh:
+			displayList.push_back(std::make_pair(newSlot->_meshDisplay, DisplayType::Mesh));
+			break;
+		default:
+			displayList.push_back(std::make_pair(nullptr, DisplayType::Image));
+			break;
+		}
+	}
+
+	newSlot->_setDisplayList(displayList);
+
+	rawDisplay->setLocalZOrder(((DBCCSprite*)_rawDisplay)->getLocalZOrder());
+
+	return newSlot;
+}
+
 DRAGONBONES_NAMESPACE_END

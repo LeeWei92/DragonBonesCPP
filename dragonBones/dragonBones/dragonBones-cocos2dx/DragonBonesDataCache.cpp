@@ -31,6 +31,12 @@ void DragonBonesDataCache::destroyInstance()
 	CC_SAFE_DELETE(_sharedDragonBonesDataCache);
 }
 
+void DragonBonesDataCache::loadDragonBones(const std::string& skeFilePath, const std::string& texFilePath, const std::string& dragonBonesName, float scale /* = 0.f */)
+{
+	loadDragonBonesData(skeFilePath, dragonBonesName);
+	loadTextureAtlasData(texFilePath, dragonBonesName, scale);
+}
+
 DragonBonesData* DragonBonesDataCache::loadDragonBonesData(const std::string& filePath, const std::string& dragonBonesName)
 {
 	if (_dragonBonesDataMap.find(filePath) == _dragonBonesDataMap.end())
@@ -57,6 +63,11 @@ CCArmatureDisplay * DragonBonesDataCache::buildArmatureDisplay(const std::string
 void DragonBonesDataCache::replaceSlotDisplay(const std::string& dragonBonesName, const std::string& armatureName, const std::string& slotName, const std::string& displayName, Slot* slot, int displayIndex)
 {
 	_factory.replaceSlotDisplay(dragonBonesName, armatureName, slotName, displayName, *slot, displayIndex);
+}
+
+void DragonBonesDataCache::replaceSlot(Armature& armature, std::map<std::string, Slot*> _replaceSlots)
+{
+	_factory.replaceSlot(armature, _replaceSlots);
 }
 
 void DragonBonesDataCache::clear()

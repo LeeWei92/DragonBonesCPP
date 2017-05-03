@@ -109,6 +109,15 @@ void Animation::_updateFFDTimelineStates()
     }
 }
 
+void Animation::updateTimelineStates()
+{
+	for (const auto animationState : _animationStates)
+	{
+		animationState->_updateTimelineStates();
+	}
+}
+
+
 void Animation::_advanceTime(float passedTime)
 {
     if (!_isPlaying)
