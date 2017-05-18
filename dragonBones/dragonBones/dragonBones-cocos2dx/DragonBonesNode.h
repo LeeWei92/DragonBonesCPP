@@ -23,9 +23,9 @@ public:
 	bool changeArmature(const std::string& armatureName);
 	bool playAnimation(const std::string& animationName , int playTimes = -1);
 	bool stopAnimation(const std::string& animationName);
+	float getAnimationTotalTime(const std::string& animationName);
 	void replaceSlot(const std::string& dragonBonesName, const std::string& armatureName, const std::string& desSlotName, const std::string& displayName, const std::string& srcSlotName, int displayIndex = -1);
 	DragonBonesNode* clone();
-    void replaceTexture(const std::string& slotName, const std::string&replaceFilePath, int displayIndex = -1);
 protected:
 	bool initDragonBonesData(const std::string& dragonBonesDataFilePath, const std::string& textureAtlasDataFilePath, const std::string& dragonBonesName, float scale);
 	bool initRenderer(CCArmatureDisplay* armatureDisplay);

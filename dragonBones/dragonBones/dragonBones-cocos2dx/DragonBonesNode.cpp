@@ -122,6 +122,18 @@ bool DragonBonesNode::stopAnimation(const std::string& animationName)
 	return true;
 }
 
+float DragonBonesNode::getAnimationTotalTime(const std::string& animationName)
+{
+	if (!_armatureDisplay) return 0.0f;
+
+	auto animationState = _armatureDisplay->getAnimation()->getState(animationName);
+	if (animationState)
+	{
+		return animationState->getTotalTime();
+	}
+	return 0.0f;
+}
+
 bool DragonBonesNode::changeArmature(const std::string& armatureName)
 {
 	const auto& armatureNames = _dragonBonesData->getArmatureNames();
@@ -153,10 +165,6 @@ bool DragonBonesNode::changeArmature(const std::string& armatureName)
 		return true;
 	}
 	return false;
-}
-
-void DragonBonesNode::replaceTexture(const std::string& slotName, const std::string&fileName, int displayIndex)
-{
 }
 
 void DragonBonesNode::replaceSlot(const std::string& dragonBonesName, const std::string& armatureName, const std::string& desSlotName, const std::string& displayName, const std::string& srcSlotName, int displayIndex)

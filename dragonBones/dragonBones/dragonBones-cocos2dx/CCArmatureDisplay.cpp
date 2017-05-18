@@ -18,9 +18,9 @@ CCArmatureDisplay* CCArmatureDisplay::create()
     return displayContainer;
 }
 
-CCArmatureDisplay::CCArmatureDisplay() :
-    _armature(nullptr),
-    _dispatcher(nullptr)
+CCArmatureDisplay::CCArmatureDisplay()
+: _armature(nullptr)
+, _dispatcher(nullptr)
 {
     _dispatcher = new cocos2d::EventDispatcher();
     this->setEventDispatcher(_dispatcher);
