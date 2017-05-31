@@ -47,6 +47,7 @@ protected:
     bool _lockDispose;
     bool _lockActionAndEvent;
     bool _slotsDirty;
+    bool _zOrderDirty;
     std::vector<Bone*> _bones;
     std::vector<Slot*> _slots;
     std::vector<ActionData*> _actions;
@@ -60,6 +61,7 @@ public:
 
 private:
     DRAGONBONES_DISALLOW_COPY_AND_ASSIGN(Armature);
+    static bool _onSortSlots(const Slot* a, const Slot* b);
     void _sortBones();
     void _sortSlots();
     void _doAction(const ActionData& value);
@@ -80,6 +82,8 @@ public:
     void _bufferAction(ActionData* value);
     /** @private */
     void _bufferEvent(EventObject* value, const std::string& type);
+    /** @private */
+    void _sortZOrder(std::vector<int>& slotIndices);
 
 public:
     void dispose();

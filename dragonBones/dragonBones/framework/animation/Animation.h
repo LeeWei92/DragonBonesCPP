@@ -34,6 +34,7 @@ public:
     bool _timelineStateDirty;
     /** @private */
     Armature* _armature;
+    
 private:
     bool _isPlaying;
     float _time;
@@ -41,6 +42,7 @@ private:
     std::map<std::string, AnimationData*> _animations;
     std::vector<std::string> _animationNames;
     std::vector<AnimationState*> _animationStates;
+
 public:
     Animation();
     ~Animation();

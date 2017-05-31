@@ -79,6 +79,11 @@ void CCSlot::_removeDisplay()
     _renderDisplay->removeFromParent();
 }
 
+void CCSlot::_updateZOrder()
+{
+    this->_renderDisplay->setLocalZOrder(this->_zOrder);
+}
+
 void CCSlot::_updateVisible()
 {
     this->_renderDisplay->setVisible(this->_parent->getVisible());
@@ -246,8 +251,8 @@ void CCSlot::_updateFrame()
                 polygonInfo.setRect(boundsRect);
 #else
                 polygonInfo.rect = boundsRect; // Copy
-#endif
                 frameDisplay->setContentSize(boundsRect.size);
+#endif
                 frameDisplay->setPolygonInfo(polygonInfo);
                 frameDisplay->setColor(frameDisplay->getColor()); // Backup
 
@@ -295,6 +300,9 @@ void CCSlot::_updateFrame()
 
                 this->_pivotY -= currentTextureData->region.height * this->_armature->getArmatureData().scale;
 
+#if COCOS2D_VERSION >= 0x00031400
+                frameDisplay->setRenderMode(DBCCSprite::RenderMode::QUAD);
+#endif
                 frameDisplay->setSpriteFrame(currentTextureData->texture); // polygonInfo will be override
 
                 if (texture != currentTextureData->texture->getTexture())
@@ -433,9 +441,9 @@ void CCSlot::_updateMesh()
     polygonInfo.setRect(boundsRect);
 #else
     polygonInfo.rect = boundsRect; // Copy
+    meshDisplay->setContentSize(boundsRect.size);
 #endif
     const auto& transform = meshDisplay->getNodeToParentTransform();
-    meshDisplay->setContentSize(boundsRect.size);
     meshDisplay->setPolygonInfo(polygonInfo);
 
     _renderDisplay->setNodeToParentTransform(transform);

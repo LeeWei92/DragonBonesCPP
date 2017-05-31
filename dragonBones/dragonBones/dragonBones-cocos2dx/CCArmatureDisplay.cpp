@@ -21,6 +21,7 @@ CCArmatureDisplay* CCArmatureDisplay::create()
 CCArmatureDisplay::CCArmatureDisplay()
 : _armature(nullptr)
 , _dispatcher(nullptr)
+, _eventCallback(nullptr)
 {
     _dispatcher = new cocos2d::EventDispatcher();
     this->setEventDispatcher(_dispatcher);
@@ -39,7 +40,13 @@ void CCArmatureDisplay::_onClear()
 
 void CCArmatureDisplay::_dispatchEvent(EventObject* value)
 {
-    _dispatcher->dispatchCustomEvent(value->type, value);
+    if (_eventCallback) {
+        _eventCallback(value);
+    }
+    
+    if (_dispatcher->isEnabled()) {
+        _dispatcher->dispatchCustomEvent(value->type, value);
+    }
 }
 
 void CCArmatureDisplay::dispose()
@@ -191,16 +198,10 @@ cocos2d::PolygonInfo& DBCCSprite::getPolygonInfoModify()
 {
     return this->_polyInfo;
 }
-
-void DBCCSprite::setContentSize(const cocos2d::Size& size)
-{
-
-	//cocos2d::Sprite::setContentSize(size);
-
-	Node::setContentSize(size);
-
-	updateStretchFactor();
-	updatePoly();
+#if COCOS2D_VERSION >= 0x00031400
+void DBCCSprite::setRenderMode(RenderMode m) {
+    _renderMode = m;
 }
+#endif
 
 DRAGONBONES_NAMESPACE_END
