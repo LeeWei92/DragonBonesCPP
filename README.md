@@ -6,4 +6,4 @@
 * [Cocos2d-x](http://cocos2d-x.org/) / [DragonBones Cocos2d-x library](./dragonBones/dragonBones/cocos2d/)
 
 ## To learn more about
-* [DragonBones WebSite](http://dragonbones.github.io/)
+* [DragonBones WebSite](http://dragonbones.com/)
