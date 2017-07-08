@@ -48,11 +48,6 @@ void Slot::_onClear()
         _disposeDisplay(_rawDisplay);
     }
 
-	//for (auto it : _replaceBoneData)
-	//{
-	//	it.second->returnToPool();
-	//}
-
     inheritAnimation = true;
     displayController.clear();
 
@@ -215,83 +210,11 @@ void Slot::_updateMeshData(bool isTimelineUpdate)
 {
     const auto prevMeshData = _meshData;
     auto rawMeshData = (MeshData*)nullptr;
-	bool replace = false;
     if (_display && _display == _meshDisplay && _displayIndex >= 0)
     {
         rawMeshData = (_displayDataSet && _displayIndex < _displayDataSet->displays.size()) ? _displayDataSet->displays[_displayIndex]->mesh : nullptr;
         const auto replaceDisplayData = (_displayIndex < _replacedDisplayDataSet.size()) ? _replacedDisplayDataSet[_displayIndex] : nullptr;
         const auto replaceMeshData = replaceDisplayData ? replaceDisplayData->mesh : nullptr;
-		if (replaceDisplayData && replaceDisplayData->mesh &&replaceDisplayData->mesh != _meshData)
-		{
-			std::vector<Bone*> tmpBones;
-			//if (0 < replaceDisplayData->mesh->bones.size())
-			//{
-			//	for (auto bone : _meshBones)
-			//	{
-					//for (const auto boneData : replaceDisplayData->mesh->bones)
-					//{
-					//	if (boneData->name == bone->name)
-					//	{
-					//		bone->name = "release_";
-					//		bone->reset();
-					//		tmpBones.push_back(bone);
-					//		break;
-					//	}
-					//}
-			//	}
-			//}
-
-			int i = 0;
-			for (const auto boneData : replaceDisplayData->mesh->bones)
-			{
-				Bone* bone = nullptr;
-				if (i < tmpBones.size())
-				{
-					bone = tmpBones.at(i);
-				}
-				else
-				{
-					auto oldBone = _armature->getBone(boneData->name);
-					if (oldBone)
-					{
-						oldBone->name = "release_";
-						oldBone->reset();
-						bone = oldBone;
-					}
-					else
-					{
-						bone = BaseObject::borrowObject<Bone>();
-						_armature->_addBoneToBoneList(bone);
-					}
-				}
-				bone->name = boneData->name;
-				i++;
-			}
-			for (const auto boneData : replaceDisplayData->mesh->bones)
-			{
-				Bone* bone = _armature->getBone(boneData->name);
-				bone->inheritTranslation = boneData->inheritTranslation;
-				bone->inheritRotation = boneData->inheritRotation;
-				bone->inheritScale = boneData->inheritScale;
-				bone->length = boneData->length;
-				bone->origin = boneData->transform; // copy
-				if (boneData->parent)
-				{
-					_armature->addBone(bone, boneData->parent->name);
-				}else
-				{
-					_armature->addBone(bone);
-				}
-				if (boneData->ik)
-				{
-
-					bone->ikBendPositive = boneData->bendPositive;
-					bone->ikWeight = boneData->weight;
-					bone->_setIK(_armature->getBone(boneData->ik->name), boneData->chain, boneData->chainIndex);
-				}
-			}
-			replace = true;
-		}
         _meshData = replaceMeshData? replaceMeshData: rawMeshData;
     }
     else
@@ -301,7 +224,7 @@ void Slot::_updateMeshData(bool isTimelineUpdate)
 
     if (_meshData != prevMeshData)
     {
-		if ((_meshData && _meshData == rawMeshData) || (_meshData && replace))
+        if (_meshData && _meshData == rawMeshData)
         {
             if (_meshData->skinned)
             {
@@ -327,12 +250,11 @@ void Slot::_updateMeshData(bool isTimelineUpdate)
             }
 
             _ffdDirty = true;
-			replace = false;
         }
         else
         {
-			_meshBones.clear();
-			_ffdVertices.clear();
+            _meshBones.clear();
+            _ffdVertices.clear();
         }
 
         if (isTimelineUpdate)

@@ -139,8 +139,6 @@ public:
     {
         return _duration;
     }
-	BoneTimelineData* getReplaceBoneTime(const std::string& name);
-	SlotTimelineData* getReplaceSlotTime(const std::string& name);
 };
 
 DRAGONBONES_NAMESPACE_END

@@ -65,11 +65,6 @@ void DragonBonesDataCache::replaceSlotDisplay(const std::string& dragonBonesName
 	_factory.replaceSlotDisplay(dragonBonesName, armatureName, slotName, displayName, *slot, displayIndex);
 }
 
-void DragonBonesDataCache::replaceSlot(Armature& armature, std::map<std::string, Slot*> _replaceSlots)
-{
-	_factory.replaceSlot(armature, _replaceSlots);
-}
-
 void DragonBonesDataCache::clear()
 {
 	_factory.clear(false);

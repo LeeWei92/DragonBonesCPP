@@ -228,17 +228,8 @@ void AnimationState::_updateTimelineStates()
     {
         const auto& boneTimelineName = bone->name;
         const auto boneTimelineData = _animationData->getBoneTimeline(boneTimelineName);
-		const auto replaceBoneTimelineData = getReplaceBoneTime(boneTimelineName);
-		if (replaceBoneTimelineData && containsBoneMask(boneTimelineName))
-		{
-			if (replaceBoneTimelineData->bone)
-			{
-				const auto boneTimelineState = BaseObject::borrowObject<BoneTimelineState>();
-				boneTimelineState->bone = bone;
-				boneTimelineState->fadeIn(_armature, this, replaceBoneTimelineData, time);
-				_boneTimelines.push_back(boneTimelineState);
-			}
-		} else if (boneTimelineData && containsBoneMask(boneTimelineName))
+
+        if (boneTimelineData && containsBoneMask(boneTimelineName))
         {
             const auto iterator = boneTimelineStates.find(boneTimelineName);
             if (iterator != boneTimelineStates.end())
@@ -275,17 +266,7 @@ void AnimationState::_updateTimelineStates()
         const auto& parentTimelineName = slot->getParent()->name;
         const auto slotTimelineData = _animationData->getSlotTimeline(timelineName);
 
-		const auto replaceslotTimelineData = getReplaceSlotTime(timelineName);
-		if (replaceslotTimelineData && containsBoneMask(parentTimelineName) && !_isFadeOut)
-		{
-			if (replaceslotTimelineData->slot)
-			{
-				const auto slotTimelineState = BaseObject::borrowObject<SlotTimelineState>();
-				slotTimelineState->slot = slot;
-				slotTimelineState->fadeIn(_armature, this, slotTimelineData, time);
-				_slotTimelines.push_back(slotTimelineState);
-			}
-		} else if (slotTimelineData && containsBoneMask(parentTimelineName) && !_isFadeOut)
+        if (slotTimelineData && containsBoneMask(parentTimelineName) && !_isFadeOut)
         {
             const auto iterator = slotTimelineStates.find(timelineName);
             if (iterator != slotTimelineStates.end())
@@ -665,36 +646,6 @@ void AnimationState::setCurrentTime(float value)
 unsigned AnimationState::getCurrentPlayTimes() const
 {
     return _timeline->_currentPlayTimes;
-}
-
-BoneTimelineData* AnimationState::getReplaceBoneTime(const std::string& name)
-{
-	AnimationData* animationData = nullptr;
-	std::map<std::string, AnimationData*> replaceAnimationData = _armature->_replaceAnimationData;
-	if (replaceAnimationData.find(_animationData->name) != replaceAnimationData.end())
-	{
-		animationData = replaceAnimationData[_animationData->name];
-	}
-	if (animationData)
-	{
-		return mapFind(animationData->boneTimelines, name);
-	}
-	return nullptr;
-}
-
-SlotTimelineData* AnimationState::getReplaceSlotTime(const std::string& name)
-{
-	AnimationData* animationData = nullptr;
-	std::map<std::string, AnimationData*> replaceAnimationData = _armature->_replaceAnimationData;
-	if (replaceAnimationData.find(_animationData->name) != replaceAnimationData.end())
-	{
-		animationData = replaceAnimationData[_animationData->name];
-	}
-	if (animationData)
-	{
-		return mapFind(animationData->slotTimelines, name);
-	}
-	return nullptr;
 }
 
 DRAGONBONES_NAMESPACE_END
